@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EntityRepository;
+using Repository.DAL.Context;
 using Repository.DAL.Repositories;
 
 namespace Repository.Console
@@ -13,22 +14,18 @@ namespace Repository.Console
 
         private static void Adicionar()
         {
-            using (var repClientes = new ClientRespository())
+            using (var db = new ClientRespository())
             {
-                new List<Cliente>
-                {
-                    new Cliente {  Nome="teste01" , Email = "well@well" , CPF = 12312312},
-                    new Cliente {  Nome="teste02" , Email = "well@well" , CPF = 12312312},
-                    new Cliente {  Nome="teste03" , Email = "well@well" , CPF = 12312312}
+                var cli = new Cliente
+                { Nome = "teste01", Email = "well@well", CPF = 12312312 };
 
-                }.ForEach(repClientes.Adicionar);
-
-                repClientes.SalvarTodos();
+                db.Adicionar(cli);
+                db.SalvarTodos();
 
                 System.Console.WriteLine("Clientes adicionadas com sucesso.");
 
                 System.Console.WriteLine("=======  clientes cadastrados ===========");
-                foreach (var c in repClientes.GetAll())
+                foreach (var c in db.GetAll())
                 {
                     System.Console.WriteLine("{0} - {1}", c.Id, c.Nome);
                 }

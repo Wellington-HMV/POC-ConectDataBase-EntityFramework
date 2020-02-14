@@ -1,18 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Repository.DAL.Context;
 using System;
 using System.Linq;
 
 namespace Repository.DAL.Base
 {
-    public class DatabaseContext : DbContext
-    {
-        public DatabaseContext() : base() { }
+    //public class DatabaseContext : DbContext
+    //{
+    //    public DatabaseContext() : base() { }
 
-    }
+    //}
     public abstract class Repository<TEntity> : IDisposable,
        IRepository<TEntity> where TEntity : class
     {
-        DatabaseContext ctx = new DatabaseContext();
+        DataBaseContext ctx = new DataBaseContext();
         public IQueryable<TEntity> GetAll()
         {
             return ctx.Set<TEntity>();
